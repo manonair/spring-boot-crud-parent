@@ -152,6 +152,20 @@
         </profile>
     </profiles>
 
+         
+    <distributionManagement>
+         <repository>
+             <id>deployment</id>
+             <name>Internal Releases</name>
+             <url>http://localhost:8081/repository/mt-release/</url>
+         </repository>
+         <snapshotRepository>
+             <id>deployment</id>
+             <name>Internal Snapshot Releases</name>
+             <url>http://localhost:8081/repository/mt-snapshot/</url>
+         </snapshotRepository>
+     </distributionManagement>
+         
     <properties>
     
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
