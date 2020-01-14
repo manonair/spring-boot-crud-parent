@@ -23,6 +23,47 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <mainClass>${start-class}</mainClass>
+                        <!-- this is necessary as we're not using the Boot parent -->
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+    
+    <profiles>
+        <profile>
+            <id>thin-jar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <dependencies>
+                            <!-- The following enables the "thin jar" deployment option. -->
+                            <dependency>
+                                <groupId>org.springframework.boot.experimental</groupId>
+                                <artifactId>spring-boot-thin-layout</artifactId>
+                                <version>${thin.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
+    
     <dependencies>
     
     	<dependency>
@@ -114,43 +155,20 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                    <configuration>
-                        <mainClass>${start-class}</mainClass>
-                        <!-- this is necessary as we're not using the Boot parent -->
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>thin-jar</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <dependencies>
-                            <!-- The following enables the "thin jar" deployment option. -->
-                            <dependency>
-                                <groupId>org.springframework.boot.experimental</groupId>
-                                <artifactId>spring-boot-thin-layout</artifactId>
-                                <version>${thin.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    
+    
+     <distributionManagement>
+         <repository>
+             <id>deployment</id>
+             <name>Internal Releases</name>
+             <url>http://localhost:8081/repository/mt-release/</url>
+         </repository>
+         <snapshotRepository>
+             <id>deployment</id>
+             <name>Internal Snapshot Releases</name>
+             <url>http://localhost:8081/repository/mt-snapshot/</url>
+         </snapshotRepository>
+     </distributionManagement>
 
          
     <distributionManagement>
@@ -168,7 +186,12 @@
          
     <properties>
     
-     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <rest-assured.version>3.3.0</rest-assured.version>
+        <!-- plugins -->
+        <thin.version>1.0.22.RELEASE</thin.version>
+        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
+        
+     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <gib.referenceBranch>refs/remotes/origin/master</gib.referenceBranch>
         <gib.skipTestsForUpstreamModules>true</gib.skipTestsForUpstreamModules>
@@ -223,10 +246,8 @@
         <lombok.version>1.16.12</lombok.version>
         <h2.version>1.4.197</h2.version>
         
-        <rest-assured.version>3.3.0</rest-assured.version>
-         
-        <thin.version>1.0.22.RELEASE</thin.version>
-        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
+       
     </properties>
 
 </project>
+
